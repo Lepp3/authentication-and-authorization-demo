@@ -1,6 +1,8 @@
 import express from 'express';
 import cookieParser from 'cookie-parser';
 import expressSession from 'express-session';
+import bcrypt from 'bcrypt';
+
 
 const app = express();
 
@@ -66,6 +68,18 @@ app.get('/set-session-data/:name', (req,res)=>{
 app.get('/get-session-data',(req,res)=>{
     console.log(req.session);
     res.send(req.session.name);
+});
+
+
+//bcrypt hashing
+app.get('/get-hash/:message', async (req,res)=>{
+    const message = req.params.message;
+    const salt = await bcrypt.genSalt(10);
+
+    const hash = await bcrypt.hash(message,salt);
+
+    console.log(hash);
+    
 })
 
 
