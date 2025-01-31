@@ -1,7 +1,9 @@
 import express from 'express';
+import cookieParser from 'cookie-parser';
 
 const app = express();
 
+app.use(cookieParser());
 
 app.get('/',(req,res)=>{
     res.send('It works');
@@ -28,6 +30,12 @@ app.get('/get-cookie', (req,res)=>{
     const cookie = req.header('Cookie');
 
     console.log(cookie);
+    res.end();
+});
+
+//set cookies with cookie parser library
+app.get('/set-cookie',(req,res)=>{
+    res.cookie('username','lyubaka3');
     res.end();
 })
 
