@@ -2,6 +2,7 @@ import express from 'express';
 import cookieParser from 'cookie-parser';
 import expressSession from 'express-session';
 import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
 
 
 const app = express();
@@ -80,7 +81,28 @@ app.get('/get-hash/:message', async (req,res)=>{
 
     console.log(hash);
     
+});
+
+//JWT
+
+const secret = 'SOMESECRETHERE';
+
+app.get('/generate-jwt/:message', async (req,res)=>{
+    const message = req.params.message;
+
+    const payload = {
+        username: 'Pesho',
+        age: 20,
+        message,
+    };
+
+    const token = jwt.sign(payload,secret,{expiresIn: '2h'});
+
+    res.send(token);
 })
+
+
+
 
 
 app.listen(5001,()=> console.log('Server is listening on http://localhost:5001....'));
