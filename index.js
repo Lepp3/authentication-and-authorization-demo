@@ -99,6 +99,18 @@ app.get('/generate-jwt/:message', async (req,res)=>{
     const token = jwt.sign(payload,secret,{expiresIn: '2h'});
 
     res.send(token);
+});
+
+//decoding jwt token
+
+app.get('/verify-jwt/:token', (req,res)=>{
+    const token = req.params.token;
+
+    const decodedToken = jwt.verify(token,secret);
+
+    console.log(decodedToken);
+    
+    res.send(decodedToken);
 })
 
 
